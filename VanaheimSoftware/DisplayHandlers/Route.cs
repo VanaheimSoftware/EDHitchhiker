@@ -31,7 +31,6 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
 
             this.jsonParser.OnNavRoute += JsonParser_OnNavRoute;
             this.jsonParser.OnFSDJump += JsonParser_OnFSDJump;
-            this.imageList = imageList;
         }
 
         ~Route() { 

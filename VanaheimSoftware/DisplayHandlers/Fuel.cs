@@ -21,6 +21,13 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
             this.jsonParser.OnLoadout += JsonParser_OnLoadout;
         }
 
+        ~Fuel() {
+            jsonParser.OnLoadGame -= JsonParser_OnLoadGame;
+            jsonParser.OnFuelScoop -= JsonParser_OnFuelScoop;
+            jsonParser.OnFSDJump -= JsonParser_OnFSDJump;
+            jsonParser.OnLoadout -= JsonParser_OnLoadout;
+        }
+
         private void JsonParser_OnLoadout(object? sender, Loadout e) {
             if (e.FuelCapacity != null)
                 UpdateFuel(e.FuelCapacity.Main, e.FuelCapacity.Main);
