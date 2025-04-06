@@ -1,6 +1,13 @@
-﻿using EDHitchhiker.VanaheimSoftware.Utils;
+﻿// Copyright (c) 2025, Erik Niese-Petersen
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE.txt file in the root directory of this source tree.
+
+using EDHitchhiker.VanaheimSoftware.Utils;
 using EDHitchhiker.VanaheimSoftware.DisplayHandlers;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace EDHitchhiker
 {
@@ -8,7 +15,7 @@ namespace EDHitchhiker
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public frmSplash? SplashForm { get; set; }
 
-        private LogReader? logReader;
+        private JournalReader? logReader;
         private JsonParser jsonParser = new();
 
         private FlyingShip? flyingShipHandler;
@@ -39,7 +46,7 @@ namespace EDHitchhiker
         }
 
         private void StartReader() {
-            logReader = new LogReader(new LogWatcher());
+            logReader = new JournalReader(new JournalWatcher());
             logReader.OnRead += LogReader_OnRead;
         }
 
@@ -55,6 +62,7 @@ namespace EDHitchhiker
         }
 
         private void LogReader_OnRead(object? sender, string e) {
+            Debug.WriteLine(e);
             jsonParser.Parse(e);
         }
 

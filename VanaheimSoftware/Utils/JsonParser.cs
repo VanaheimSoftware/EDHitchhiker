@@ -1,9 +1,14 @@
-﻿using EDHitchhiker.VanaheimSoftware.Api;
+﻿// Copyright (c) 2025, Erik Niese-Petersen
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE.txt file in the root directory of this source tree.
+
+using EDHitchhiker.VanaheimSoftware.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace EDHitchhiker.VanaheimSoftware.Utils
-{
+namespace EDHitchhiker.VanaheimSoftware.Utils {
     public class JsonParser
     {
         // events per API event
@@ -65,6 +70,8 @@ namespace EDHitchhiker.VanaheimSoftware.Utils
 
         public event EventHandler<NavRoute>? OnNavRoute;
 
+        public event EventHandler<NavRouteClear>? OnNavRouteClear;
+
         public event EventHandler<Progress>? OnProgress;
 
         public event EventHandler<Rank>? OnRank;
@@ -101,6 +108,7 @@ namespace EDHitchhiker.VanaheimSoftware.Utils
          * Based of Journal version: 37
          * Link: https://hosting.zaonce.net/community/journal/v37/Journal_Manual_v37.pdf
          * Note: As of 2025/04/05 still no updated journal including PP2.0 and Colonization. I may manually update as I fiddle around
+         *       Not all event entries and fields is encountered for in this parser
          */
         public void Parse(string? json)
         {
@@ -283,6 +291,12 @@ namespace EDHitchhiker.VanaheimSoftware.Utils
                     NavRoute? navRoute = JsonConvert.DeserializeObject<NavRoute>(json);
                     if (navRoute != null)
                         OnNavRoute?.Invoke(this, navRoute);
+                    break;
+
+                case "navrouteclear":
+                    NavRouteClear? navRouteClear = JsonConvert.DeserializeObject<NavRouteClear>(json);
+                    if (navRouteClear != null)
+                        OnNavRouteClear?.Invoke(this, navRouteClear);
                     break;
 
                 case "progress":

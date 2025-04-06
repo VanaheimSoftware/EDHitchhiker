@@ -1,4 +1,10 @@
-﻿using EDHitchhiker.VanaheimSoftware.Api;
+﻿// Copyright (c) 2025, Erik Niese-Petersen
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE.txt file in the root directory of this source tree.
+
+using EDHitchhiker.VanaheimSoftware.Api;
 using EDHitchhiker.VanaheimSoftware.Utils;
 
 namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
@@ -137,6 +143,7 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
         private void JsonParser_OnFSSAllBodiesFound(object? sender, FSSAllBodiesFound e) {
             lock (countLock) {
                 bodyCounts.Scanned = e.Count;
+                bodyCounts.Total = e.Count;
             }
             ShowCounts();
         }
@@ -154,7 +161,8 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
         }
 
         private string ShortBodyName(string name) {
-            return name.ToUpper().Replace(systemName, "").TrimStart();     // if main star is called the same as system, then this should be empty. Allow for this
+            // if main star is called the same as system, then this should be empty. Allow for this
+            return name.ToUpper().Replace(systemName, "").TrimStart();     
         }
 
         private void JsonParser_OnScan(object? sender, Scan e) {
@@ -189,6 +197,7 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
         private int FindIndex(string bodyName) {
             if (bodyName.Length == 0 || scannedBodies.Count == 0) return 0;
 
+            // could do binary search, but so little amount data that I don't worry
             int index = 0;
             do {
                 // for now just going by name order. Could create some off results. Really only for display for now.

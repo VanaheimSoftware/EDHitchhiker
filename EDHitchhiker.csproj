@@ -28,4 +28,12 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="E:\Development\CSharpProjects\EDHitchhiker\EDHitchhiker\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="E:\Development\CSharpProjects\EDHitchhiker\EDHitchhiker\.editorconfig" />
+  </ItemGroup>
+
 </Project>

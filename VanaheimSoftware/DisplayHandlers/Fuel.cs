@@ -1,4 +1,10 @@
-﻿using EDHitchhiker.VanaheimSoftware.Api;
+﻿// Copyright (c) 2025, Erik Niese-Petersen
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE.txt file in the root directory of this source tree.
+
+using EDHitchhiker.VanaheimSoftware.Api;
 using EDHitchhiker.VanaheimSoftware.Utils;
 
 namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
@@ -12,6 +18,14 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
             this.jsonParser.OnLoadGame += JsonParser_OnLoadGame;
             this.jsonParser.OnFuelScoop += JsonParser_OnFuelScoop;
             this.jsonParser.OnFSDJump += JsonParser_OnFSDJump;
+            this.jsonParser.OnLoadout += JsonParser_OnLoadout;
+        }
+
+        private void JsonParser_OnLoadout(object? sender, Loadout e) {
+            if (e.FuelCapacity != null)
+                UpdateFuel(e.FuelCapacity.Main, e.FuelCapacity.Main);
+            else
+                UpdateFuel(0, 0);
         }
 
         private void JsonParser_OnLoadGame(object? sender, LoadGame e) {
@@ -28,7 +42,7 @@ namespace EDHitchhiker.VanaheimSoftware.DisplayHandlers {
 
         private void UpdateFuel(float current, float capacity) {
             lock (lockFuelDetail) {
-                fuelDetail.Current += current;
+                fuelDetail.Current = current;
                 fuelDetail.Capacity = capacity;
             }
             ShowFuel();
